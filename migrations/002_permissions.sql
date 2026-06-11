@@ -1,1 +1,4 @@
--- Placeholder
+-- PLACEHOLDER ONLY
+-- Actual permissions currently configured in Supabase RLS policies
+-- Export required before production release
+-- See docs/recovery-plan.md for schema export workflow

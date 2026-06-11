@@ -1,1 +1,4 @@
--- SQL Migrations Placeholder
+-- PLACEHOLDER ONLY
+-- Actual schema currently resides in Supabase
+-- Export required before production release
+-- See docs/recovery-plan.md for schema export workflow
