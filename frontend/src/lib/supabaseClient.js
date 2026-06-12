@@ -1,4 +1,4 @@
-// Wealth Tower — Supabase client (Phase 4.1)
+// Wealth Tower — Supabase client (Phase 4.2)
 import { createClient } from "@supabase/supabase-js";
 
 const url = import.meta.env.VITE_SUPABASE_URL;
@@ -12,7 +12,6 @@ if (!url || !anonKey) {
 
 export const supabase = createClient(url, anonKey);
 
-// Fetch the latest portfolio snapshot (Card 1: Current Wealth)
 export async function fetchCurrentWealth() {
   const { data, error } = await supabase
     .from("portfolio_snapshots")
@@ -23,7 +22,6 @@ export async function fetchCurrentWealth() {
   return data?.[0] ?? null;
 }
 
-// Fetch user targets (Cards 2, 3, 4 + monthly_contribution)
 export async function fetchWealthTargets(accountId = "50213686") {
   const { data, error } = await supabase
     .from("wealth_targets")
@@ -34,4 +32,13 @@ export async function fetchWealthTargets(accountId = "50213686") {
     .single();
   if (error) throw error;
   return data;
+}
+
+export async function fetchSnapshotHistory() {
+  const { data, error } = await supabase
+    .from("portfolio_snapshots")
+    .select("net_liquidation, created_at")
+    .order("created_at", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
 }
