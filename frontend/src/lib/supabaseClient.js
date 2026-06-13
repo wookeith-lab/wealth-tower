@@ -26,7 +26,7 @@ export async function fetchWealthTargets(accountId = "50213686") {
   const { data, error } = await supabase
     .from("wealth_targets")
     .select(
-      "initial_capital, target_wealth, target_date, monthly_contribution"
+      "initial_capital, target_wealth, target_date, monthly_contribution, base_currency"
     )
     .eq("account_id", accountId)
     .single();
@@ -41,4 +41,14 @@ export async function fetchSnapshotHistory() {
     .order("created_at", { ascending: true });
   if (error) throw error;
   return data ?? [];
+}
+
+export async function fetchLatestFxRate(pair = 'USDSGD') {
+  const { data, error } = await supabase.from('fx_rates')
+    .select('rate, source, status, fetched_at')
+    .eq('currency_pair', pair)
+    .order('fetched_at', { ascending: false })
+    .limit(1);
+  if (error) throw error;
+  return data?.[0] ?? null;
 }
